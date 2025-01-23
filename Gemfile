@@ -6,14 +6,14 @@ ruby '3.2.2'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.0.8', '>= 7.0.8.5'
 
+gem 'mysql2' #追加
+gem 'dotenv-rails' #Railsで環境変数を使うために追加
+
 # 追加　'1.3.5'ではエラーが発生します
 gem 'concurrent-ruby', '1.3.4'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
-
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.4'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 5.0'
