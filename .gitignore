@@ -33,3 +33,5 @@
 #.envファイルにはパスワードなどの機密情報が含まれるため、Gitに含めないようにする必要がある
 /.env*
 !/.env*.erb
+/app/assets/builds/*
+!/app/assets/builds/.keep
