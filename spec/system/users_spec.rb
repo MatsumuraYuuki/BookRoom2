@@ -13,7 +13,6 @@ describe 'User', type: :system do
     before { visit '/users/sign_up' }
 
     # ユーザー登録を行う一連の操作を subject にまとめる
-    # spec/system/users_spec.rb
     subject do
       fill_in 'user_user_name', with: user_name
       fill_in 'user_email', with: email
@@ -25,16 +24,34 @@ describe 'User', type: :system do
     context '正常系' do
       it 'ユーザーを作成できる' do
         expect { subject }.to change(User, :count).by(1) # Userが1つ増える
+        expect(page).to have_content('ユーザー登録に成功しました。')
         expect(current_path).to eq('/') # ユーザー登録後はトップページにリダイレクト
       end
     end
 
     context '異常系' do
+      context 'エラー理由が1件の場合' do
+        let(:user_name) { '' }
+        it 'ユーザー作成に失敗した旨のエラーメッセージを表示する' do
+          subject
+          expect(page).to have_content('エラーが発生したためユーザーは保存されませんでした。')
+        end
+      end
+
+      context 'エラー理由が2件以上の場合' do
+        let(:user_name) { '' }
+        let(:email) { '' }
+        it '問題件数とともに、ユーザー作成に失敗した旨のエラーメッセージを表示する' do
+          subject
+          expect(page).to have_content('エラーが発生したためユーザーは保存されませんでした。')
+        end
+      end
+
       context 'user_nameが空の場合' do
         let(:user_name) { '' }
         it 'ユーザーを作成せず、エラーメッセージを表示する' do
           expect { subject }.not_to change(User, :count) # Userが増えない
-          expect(page).to have_content("User name can't be blank") # エラーメッセージのチェック
+          expect(page).to have_content("ユーザーネーム が入力されていません。") #エラーメッセージチェック
         end
       end
 
@@ -42,7 +59,7 @@ describe 'User', type: :system do
         let(:user_name) { 'あ' * 21 }
         it 'ユーザーを作成せず、エラーメッセージを表示する' do
           expect { subject }.not_to change(User, :count)
-          expect(page).to have_content('User name is too long (maximum is 20 character')
+          expect(page).to have_content('ユーザーネーム は20文字以下に設定して下さい。')
         end
       end
 
@@ -50,7 +67,7 @@ describe 'User', type: :system do
         let(:email) { '' }
         it 'ユーザーを作成せず、エラーメッセージを表示する' do
           expect { subject }.not_to change(User, :count)
-          expect(page).to have_content("Email can't be blank")
+          expect(page).to have_content('メールアドレス が入力されていません。')
         end
       end
 
@@ -58,7 +75,7 @@ describe 'User', type: :system do
         let(:password) { '' }
         it 'ユーザーを作成せず、エラーメッセージを表示する' do
           expect { subject }.not_to change(User, :count)
-          expect(page).to have_content("Password can't be blank")
+          expect(page).to have_content('パスワード が入力されていません。')
         end
       end
 
@@ -66,7 +83,7 @@ describe 'User', type: :system do
         let(:password) { 'a' * 5 }
         it 'ユーザーを作成せず、エラーメッセージを表示する' do
           expect { subject }.not_to change(User, :count)
-          expect(page).to have_content('Password is too short (minimum is 6 characters')
+          expect(page).to have_content('パスワード は6文字以上に設定して下さい。')
         end
       end
 
@@ -74,7 +91,7 @@ describe 'User', type: :system do
         let(:password) { 'a' * 129 }
         it 'ユーザーを作成せず、エラーメッセージを表示する' do
           expect { subject }.not_to change(User, :count)
-          expect(page).to have_content('Password is too long (maximum is 128 characters)')
+          expect(page).to have_content('パスワード は128文字以下に設定して下さい。')
         end
       end
 
@@ -82,7 +99,7 @@ describe 'User', type: :system do
         let(:password_confirmation) { "#{password}hoge" } # passwordに"hoge"を足した文字列にする
         it 'ユーザーを作成せず、エラーメッセージを表示する' do
           expect { subject }.not_to change(User, :count)
-          expect(page).to have_content("Password confirmation doesn't match Password")
+          expect(page).to have_content('確認用パスワード が一致していません。')
         end
       end
     end
@@ -103,8 +120,8 @@ describe 'User', type: :system do
         expect(current_path).to eq('/')
       end
 
-      it 'ログイン成功時のフラッシュメッセージを表示する' do # 追加
-        expect(page).to have_content('Signed in successfully')
+      it 'ログイン成功時のフラッシュメッセージを表示する' do
+        expect(page).to have_content('ログインしました。')
       end
     end
 
@@ -114,9 +131,26 @@ describe 'User', type: :system do
         expect(current_path).to eq('/users/sign_in')
       end
 
-      it 'ログイン失敗時のフラッシュメッセージを表示する' do  # 追加
-        expect(page).to have_content('Invalid Email or password')
+      it 'ログイン失敗時のフラッシュメッセージを表示する' do
+        expect(page).to have_content('メールアドレスまたはパスワードが違います。')
       end
+    end
+  end
+
+  describe 'ログアウト機能の検証' do
+    before do
+      user = create(:user, user_name: user_name, email: email, password: password, password_confirmation: password) # ユーザー作成
+      sign_in user # 作成したユーザーでログイン
+      visit '/'
+      click_button 'ログアウト'
+    end
+
+    it 'トップページにリダイレクトする' do
+      expect(current_path).to eq('/')
+    end
+
+    it 'ログアウト時のフラッシュメッセージを表示する' do
+      expect(page).to have_content('ログアウトしました。')
     end
   end
 end

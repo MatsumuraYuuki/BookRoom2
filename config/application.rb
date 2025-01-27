@@ -20,5 +20,9 @@ module BookRoom2
       helper_specs: false, # ヘルパーファイル用のスペックを作成しない
       routing_specs: false # routes.rb用のスペックファイル作成しない
     end
+
+    # 追記 Rails アプリケーションのデフォルトの言語を日本語 (:ja) に設定
+    config.i18n.default_locale = :ja
+
   end
 end
