@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!
+  # bookroom2では投稿の閲覧についてはログインを必要としないことにする
+  before_action :authenticate_user!, except: [:show]
 
   def new
     @post = Post.new
@@ -15,6 +16,10 @@ class PostsController < ApplicationController
       flash[:alert] = '投稿に失敗しました'
       render :new
     end
+  end
+
+  def show # 追加
+    @post = Post.find_by(id: params[:id])
   end
 
 
