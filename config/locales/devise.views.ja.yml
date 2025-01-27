@@ -18,6 +18,16 @@ ja:
               invalid: "は有効でありません。"
             password_confirmation:
               confirmation: "が一致していません。"
+        post: # ここから追加
+          attributes:
+            title:
+              blank: "が入力されていません。"
+              too_long: "は%{count}文字以下に設定して下さい。"
+            content:
+              blank: "が入力されていません。"
+              too_long: "は%{count}文字以下に設定して下さい。"
+            user:
+              required: "が入力されていません。"
     attributes:
       user:
         user_name: "ユーザーネーム"
@@ -32,14 +42,14 @@ ja:
 
   devise:
     failure:
-      already_authenticated: "既にログインしています。"  #　追加
+      already_authenticated: "既にログインしています。"  # 追加
       invalid: "%{authentication_keys}またはパスワードが違います。"
     registrations:
       user:
-        signed_up: ユーザー登録に成功しました。
+        signed_up: "ユーザー登録に成功しました。"
     sessions:
       new:
-        sign_in: ログイン
-      signed_in: ログインしました。
+        sign_in: "ログイン"
+      signed_in: "ログインしました。"
       user:
-        signed_out: ログアウトしました。
+        signed_out: "ログアウトしました。"
