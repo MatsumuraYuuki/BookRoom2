@@ -67,5 +67,8 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   # FactoryBotのメソッドを使う際、そのモジュール名 (FactoryBot)を省略できるようにしておく
-  config.include FactoryBot::Syntax::Methods # 最下段に追記
+  config.include FactoryBot::Syntax::Methods # 追記
+
+  #sign_in userという形で1行記述するだけで、RSpec テスト内でログインした状態を実現させる
+  config.include Devise::Test::IntegrationHelpers, type: :system # 追記
 end
