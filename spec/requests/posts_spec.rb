@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+#Postsコントローラーのテスト
 RSpec.describe 'Posts', type: :request do
 
   before do

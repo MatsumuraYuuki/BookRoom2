@@ -18,11 +18,11 @@ class PostsController < ApplicationController
     end
   end
 
-  def show # 追加
+  def show # params[:id]で取得されたポスト
     @post = Post.find_by(id: params[:id])
   end
 
-  def index # 追加
+  def index 
     @posts = Post.limit(10).order(created_at: :desc)
   end
 
