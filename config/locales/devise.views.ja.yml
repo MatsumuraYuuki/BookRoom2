@@ -18,6 +18,9 @@ ja:
               invalid: "は有効でありません。"
             password_confirmation:
               confirmation: "が一致していません。"
+            current_password:
+              blank: "を入力してください"
+              invalid: "が正しくありません"
         post: # ここから追加
           attributes:
             title:
@@ -34,6 +37,7 @@ ja:
         email: "メールアドレス"
         password: "パスワード"
         password_confirmation: "確認用パスワード"
+        current_password: "現在のパスワード"
     models:
       user: "ユーザー"
   errors:
@@ -44,11 +48,13 @@ ja:
     failure:
       already_authenticated: "既にログインしています。"  # 追加
       invalid: "%{authentication_keys}またはパスワードが違います。"
+      not_found_in_database: "メールアドレスまたはパスワードが間違っています。"
       user:
         unauthenticated: "ログインしてください。" # 追加
     registrations:
       user:
         signed_up: "ユーザー登録に成功しました。"
+        updated: 'アカウント情報を更新しました。'
     sessions:
       new:
         sign_in: "ログイン"
