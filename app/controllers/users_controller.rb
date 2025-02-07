@@ -10,7 +10,8 @@ class UsersController < ApplicationController
     end
   end
 
+  # 1ページに10件
   def index
-    @users = User.all
+    @users = User.page(params[:page]).per(10)
   end
 end

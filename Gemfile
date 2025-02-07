@@ -8,6 +8,8 @@ gem 'rails', '~> 7.0.8', '>= 7.0.8.5'
 
 gem "faker",           "2.21.0" #サンプルのユーザー作成
 
+gem 'kaminari' #ページネーションを実装するためのGem
+
 gem 'foreman' #bin/dev起動時に必要
 
 gem 'devise' # 追記
