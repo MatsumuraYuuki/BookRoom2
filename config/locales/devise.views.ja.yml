@@ -21,7 +21,7 @@ ja:
             current_password:
               blank: "を入力してください"
               invalid: "が正しくありません"
-        post: # ここから追加
+        post:
           attributes:
             title:
               blank: "が入力されていません。"
@@ -45,19 +45,51 @@ ja:
       not_saved: "エラーが発生したため%{resource}は保存されませんでした。"
 
   devise:
+    confirmations:
+      confirmed: 'アカウントの確認が完了しました。'
+      send_instructions: 'アカウントの確認方法をメールでご連絡します。'
+      send_paranoid_instructions: 'あなたのメールアドレスが登録済みの場合、アカウントの確認方法をメールでご連絡します。'
     failure:
-      already_authenticated: "既にログインしています。"  # 追加
-      invalid: "%{authentication_keys}またはパスワードが違います。"
-      not_found_in_database: "メールアドレスまたはパスワードが間違っています。"
+      already_authenticated: '既にログインしています。'
+      inactive: 'アカウントが有効化されていません。'
+      invalid: '%{authentication_keys}またはパスワードが違います。'
+      locked: 'あなたのアカウントは凍結されています。'
+      last_attempt: 'あと1回の試行で失敗するとアカウントがロックされます。'
+      not_found_in_database: 'メールアドレスまたはパスワードが間違っています。'
+      timeout: 'セッションがタイムアウトしました。もう一度ログインしてください。'
+      unauthenticated: 'アカウント登録もしくはログインしてください。'
+      unconfirmed: 'メールアドレスの本人確認が必要です。'
       user:
-        unauthenticated: "ログインしてください。" # 追加
+        unauthenticated: "ログインしてください。"
+    mailer:
+      confirmation_instructions:
+        subject: 'アカウントの有効化について'
+        action: 'アカウントを有効化する'
+        greeting: '%{recipient}様'
+        instruction: '以下のリンクをクリックし、アカウントを有効化してください。'
+      reset_password_instructions:
+        subject: 'パスワードの再設定について'
+        action: 'パスワードを変更する'
+        greeting: '%{recipient}様'
+        instruction: 'パスワード再設定の依頼を受けたため、メールを送信しています。下のリンクからパスワードの再設定ができます。'
+        instruction_2: 'パスワード再設定の依頼をしていない場合、このメールを無視してください。'
+        instruction_3: 'パスワードの再設定は、上のリンクから新しいパスワードを登録するまで完了しません。'
     registrations:
+      destroyed: 'アカウントを削除しました。またのご利用をお待ちしています。'
+      signed_up: 'ユーザー登録に成功しました。'
+      signed_up_but_inactive: 'アカウント登録が完了しました。しかしまだアカウントが有効化されていないため、ログインできません。'
+      signed_up_but_locked: 'アカウント登録が完了しました。しかしアカウントが凍結されているため、ログインできません。'
+      signed_up_but_unconfirmed: '本人確認用のメールを送信しました。メール内のリンクからアカウントを有効化させてください。'
+      update_needs_confirmation: 'アカウント情報を変更しました。変更されたメールアドレスの本人確認のため、本人確認用メールより確認処理をおこなってください。'
+      updated: 'アカウント情報を更新しました。'
       user:
         signed_up: "ユーザー登録に成功しました。"
         updated: 'アカウント情報を更新しました。'
     sessions:
+      signed_in: 'ログインしました。'
+      signed_out: 'ログアウトしました。'
+      already_signed_out: '既にログアウト済みです。'
       new:
         sign_in: "ログイン"
-      signed_in: "ログインしました。"
       user:
         signed_out: "ログアウトしました。"

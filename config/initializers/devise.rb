@@ -312,4 +312,8 @@ Devise.setup do |config|
   # When set to false, does not sign a user in automatically after their password is
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
+
+  # メール認証を有効化
+  config.mailer_sender = 'no-reply@example.com'  # 送信元メールアドレスを設定
+  config.confirm_within = 1.days  # 認証メールの有効期限を1日に設定
 end

@@ -1,5 +1,27 @@
-<p>Welcome <%= @email %>!</p>
+<div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: sans-serif;">
+  <h2 style="color: #333; text-align: center;">BookRoomへようこそ！</h2>
 
-<p>You can confirm your account email through the link below:</p>
+  <p style="color: #666; font-size: 16px; line-height: 1.5;">
+    <%= @email %>様
+  </p>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+  <p style="color: #666; font-size: 16px; line-height: 1.5;">
+    BookRoomへのご登録ありがとうございます。以下のリンクをクリックして、アカウントを有効化してください。
+  </p>
+
+  <div style="text-align: center; margin: 30px 0;">
+    <%= link_to 'アカウントを有効化する', confirmation_url(@resource, confirmation_token: @token), 
+        style: 'display: inline-block; padding: 12px 24px; background-color: #4F46E5; color: white; text-decoration: none; border-radius: 6px;' %>
+  </div>
+
+  <p style="color: #666; font-size: 14px; line-height: 1.5;">
+    ※このメールに心当たりがない場合は、無視していただいて構いません。<br>
+    上のリンクにアクセスするまで、アカウントは有効化されません。
+  </p>
+
+  <hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;">
+
+  <p style="color: #999; font-size: 12px; text-align: center;">
+    本メールは送信専用です。返信はできませんのでご了承ください。
+  </p>
+</div>
