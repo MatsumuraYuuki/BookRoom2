@@ -93,3 +93,9 @@ ja:
         sign_in: "ログイン"
       user:
         signed_out: "ログアウトしました。"
+    passwords:
+      user:
+        updated: 'パスワードが正常に変更されました。'
+        send_instructions: 'パスワードの再設定について数分以内にメールでご連絡いたします。'
+      updated: 'パスワードが正常に変更されました。'
+      send_instructions: 'パスワードの再設定について数分以内にメールでご連絡いたします。'

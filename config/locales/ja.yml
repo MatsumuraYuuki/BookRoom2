@@ -1,4 +1,21 @@
 ja:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              already_confirmed: "は既に確認済みです。"
+              not_found: "が見つかりません。"
+          not_found: "が見つかりません。"
+      messages:
+        not_found: "が見つかりません。"
+  errors:
+    attributes:
+      email:
+        not_found: "が見つかりません。"
+    messages:
+      not_found: "が見つかりません。"
   views:
     pagination:
       first: "&laquo; 最初"
