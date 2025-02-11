@@ -1,13 +1,11 @@
 module ApplicationHelper
-
   # ページごとの完全なタイトルを返す
   def full_title(page_title = '')
-    base_title = "BookRoom2"
+    base_title = 'BookRoom2'
     if page_title.empty?
       base_title
     else
       "#{page_title} | #{base_title}"
     end
   end
-  
 end

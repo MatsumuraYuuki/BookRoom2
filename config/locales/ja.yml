@@ -9,7 +9,26 @@ ja:
               not_found: "が見つかりません。"
           not_found: "が見つかりません。"
       messages:
+        record_invalid: 'バリデーションに失敗しました: %{errors}'
+        restrict_dependent_destroy:
+          has_one: "%{record}が存在しているので削除できません"
+          has_many: "%{record}が存在しているので削除できません"
         not_found: "が見つかりません。"
+    models:
+      user: "ユーザー"
+      post: "投稿"
+    attributes:
+      user:
+        user_name: "ユーザー名"
+        email: "メールアドレス"
+        password: "パスワード"
+        password_confirmation: "パスワード（確認）"
+        admin: "管理者権限"
+      post:
+        title: "タイトル"
+        content: "内容"
+        created_at: "作成日時"
+        updated_at: "更新日時"
   errors:
     attributes:
       email:
@@ -23,3 +42,8 @@ ja:
       previous: "&lsaquo; 前"
       next: "次 &rsaquo;"
       truncate: "&hellip;"
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M:%S"
+      long: "%Y年%m月%d日 %H時%M分"
+      short: "%m/%d %H:%M"

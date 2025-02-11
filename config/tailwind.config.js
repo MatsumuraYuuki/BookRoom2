@@ -14,9 +14,12 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    // require('@tailwindcss/forms'),
-    // require('@tailwindcss/typography'),
-    // require('@tailwindcss/container-queries'),
-  ]
+  plugins: [],
+  // 使用する機能を明示的に有効化
+  variants: {
+    extend: {
+      textColor: ['hover', 'focus'],
+      backgroundColor: ['hover', 'focus']
+    }
+  }
 }

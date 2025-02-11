@@ -3,11 +3,13 @@ class UsersController < ApplicationController
   before_action :authenticate_admin!, only: [:destroy] # 管理者要求
   before_action :set_user, only: [:show, :destroy] # @userの設定
 
-  def show
-  end
-
   def index
     @users = User.page(params[:page]).per(10)
+  end
+
+  def show
+    @users = User.page(params[:page]).per(10)
+    @posts = @user.posts.order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def destroy
@@ -22,17 +24,17 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find_by(id: params[:id])
-    if @user.nil?
-      flash[:alert] = 'ユーザーが見つかりません'
-      redirect_to users_path
-    end
+    return unless @user.nil?
+
+    flash[:alert] = 'ユーザーが見つかりません'
+    redirect_to users_path
   end
 
   def authenticate_admin!
-    unless current_user&.admin?
-      flash[:alert] = "管理者権限が必要です"
-      redirect_to root_path
-    end
+    return if current_user&.admin?
+
+    flash[:alert] = "管理者権限が必要です"
+    redirect_to root_path
   end
 
   def user_params

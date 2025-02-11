@@ -8,16 +8,16 @@ gem 'rails', '~> 7.0.8', '>= 7.0.8.5'
 
 gem 'letter_opener'
 
-gem "faker",           "2.21.0" #サンプルのユーザー作成
+gem 'faker', '2.21.0' # サンプルのユーザー作成
 
-gem 'kaminari' #ページネーションを実装するためのGem
+gem 'kaminari' # ページネーションを実装するためのGem
 
-gem 'foreman' #bin/dev起動時に必要
+gem 'foreman' # bin/dev起動時に必要
 
 gem 'devise' # 追記
 
-gem 'mysql2' #追加
-gem 'dotenv-rails' #Railsで環境変数を使うために追加
+gem 'dotenv-rails' # Railsで環境変数を使うために追加
+gem 'mysql2' # 追加
 
 # 追加　'1.3.5'ではエラーが発生します
 gem 'concurrent-ruby', '1.3.4'

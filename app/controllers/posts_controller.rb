@@ -2,6 +2,15 @@ class PostsController < ApplicationController
   # bookroom2では投稿の閲覧についてはログインを必要としないことにする
   before_action :authenticate_user!, except: [:show, :index]
 
+  def index
+    @posts = Post.order(created_at: :desc).page(params[:page]).per(10)
+  end
+
+  # params[:id]で取得されたポスト
+  def show
+    @post = Post.find_by(id: params[:id])
+  end
+
   def new
     @post = Post.new
   end
@@ -18,14 +27,6 @@ class PostsController < ApplicationController
     end
   end
 
-  def show # params[:id]で取得されたポスト
-    @post = Post.find_by(id: params[:id])
-  end
-
-  def index 
-    @posts = Post.limit(10).order(created_at: :desc)
-  end
-
   def destroy
     @post = Post.find_by(id: params[:id])
     if @post.user == current_user
@@ -34,7 +35,6 @@ class PostsController < ApplicationController
     end
     redirect_to root_path
   end
-
 
   private
 
