@@ -1,0 +1,6 @@
+<%= form_with(model: current_user.active_relationships.find_by(followed_id: @user.id),
+              method: :delete,
+              class: "inline") do |f| %>
+  <%= f.submit "フォロー解除", 
+      class: "px-2 py-1 text-sm md:px-4 md:py-2 md:text-base bg-gray-200 text-gray-700 rounded cursor-pointer transition-colors duration-200 ease-in-out hover:bg-gray-300" %>
+<% end %>

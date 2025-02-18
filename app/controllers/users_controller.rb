@@ -20,6 +20,20 @@ class UsersController < ApplicationController
     end
   end
 
+  def following
+    @title = 'フォロー中'
+    @user = User.find(params[:id])
+    @users = @user.following.page(params[:page])
+    render 'show_follow'
+  end
+
+  def followers
+    @title = 'フォロワー'
+    @user = User.find(params[:id])
+    @users = @user.followers.page(params[:page])
+    render 'show_follow'
+  end
+
   private
 
   def set_user
@@ -33,7 +47,7 @@ class UsersController < ApplicationController
   def authenticate_admin!
     return if current_user&.admin?
 
-    flash[:alert] = "管理者権限が必要です"
+    flash[:alert] = '管理者権限が必要です'
     redirect_to root_path
   end
 

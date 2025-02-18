@@ -1,6 +1,7 @@
 <% provide(:title, "プロフィール") %>
 
 <div class="container mx-auto px-4 py-8">
+  <%# プロフィール覧 %>
   <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
     <div class="flex items-center space-x-4 mb-6">
 
@@ -13,6 +14,17 @@
         <h1 class="text-2xl font-bold text-gray-800">
           <%= @user.user_name %> のプロフィール
         </h1>
+      </div>
+
+    </div>
+
+    <%# フォロー統計とフォローボタン %>
+    <div class="flex items-center justify-between mb-2">
+      <div class="flex-1">
+        <%= render 'shared/stats' %>
+      </div>
+      <div class="flex-none">
+        <%= render 'follow_form' if user_signed_in? %>
       </div>
     </div>
 
@@ -35,7 +47,8 @@
       </div>
     <% end %>
   </div>
-  
+
+  <%# タブ切り替え(投稿一覧＋本棚) %>
   <div class="max-w-2xl mx-auto">
     <div class="mt-20 pb-8 border-t border-2 pt-8">
       <h2 class="text-xl font-semibold text-gray-800 mb-4 pt-4">投稿一覧</h2>
