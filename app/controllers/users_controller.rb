@@ -8,8 +8,9 @@ class UsersController < ApplicationController
   end
 
   def show
-    @users = User.page(params[:page]).per(10)
-    @posts = @user.posts.order(created_at: :desc).page(params[:page]).per(10)
+    @user = User.find(params[:id])
+    @feed_posts = @user.feed.page(params[:page]) if current_user == @user
+    @posts = @user.posts.page(params[:page])
   end
 
   def destroy

@@ -51,12 +51,24 @@
   <%# タブ切り替え(投稿一覧＋本棚) %>
   <div class="max-w-2xl mx-auto">
     <div class="mt-20 pb-8 border-t border-2 pt-8">
-      <h2 class="text-xl font-semibold text-gray-800 mb-4 pt-4">投稿一覧</h2>
-      <% if @user.posts.any? %>
+      <h2 class="text-xl font-semibold text-gray-800 mb-4 pt-4">
+        <%= current_user == @user ? "タイムライン" : "#{@user.user_name}の投稿" %>
+      </h2>
+      
+      <%# 自分のプロフならフィードを、他ならそのuserの投稿のみ表示 %>
+      <% display_posts = current_user == @user ? @feed_posts : @posts %>
+      
+      <% if display_posts.present? %>
         <div class="space-y-4">
-          <% @user.posts.each do |post| %>
+          <% display_posts.each do |post| %>
             <div class="bg-gray-50 rounded-lg p-4">
               <div class="flex justify-between items-start mb-2">
+                <%# 自分のページかつフィード表示の場合は投稿者名を表示 %>
+                <% if current_user == @user %>
+                  <span class="text-sm font-medium text-gray-700">
+                    <%= link_to post.user.user_name, user_path(post.user), class: "hover:text-blue-600 hover:underline" %>
+                  </span>
+                <% end %>
                 <span class="text-sm text-gray-500">
                   <%= l post.created_at, format: :long %>
                 </span>
@@ -70,7 +82,7 @@
                 <%= link_to "詳細", post_path(post), 
                     class: "text-sm text-gray-600 hover:text-indigo-800" %>
                 
-                <% if current_user == @user %>
+                <% if current_user == post.user %>
                   <%= link_to "編集", edit_post_path(post), 
                       class: "text-sm text-gray-600 hover:text-gray-800" %>
                   
@@ -85,13 +97,12 @@
             </div>
           <% end %>
         </div>
-
         <div class="mt-4">
-          <%= paginate @posts %>
+          <%= paginate display_posts %>
         </div>
       <% else %>
         <p class="text-gray-600">まだ投稿がありません。</p>
       <% end %>
-    </div>    
-  </div>  
+    </div>   
+  </div>
 </div>

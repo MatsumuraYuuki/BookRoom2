@@ -39,4 +39,12 @@ class User < ApplicationRecord
   end
 
   # フィードの実装は後で行う
+  def feed
+    # フォローしているユーザーのID配列を取得
+    following_ids = 'SELECT followed_id FROM relationships WHERE follower_id = :user_id'
+    # 自分の投稿 + フォローしているユーザーの投稿を取得
+    Post.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
+        .includes(:user) # N+1問題を回避
+        .order(created_at: :desc) # 新しい投稿を上に
+  end
 end
