@@ -8,15 +8,21 @@ ja:
               already_confirmed: "は既に確認済みです。"
               not_found: "が見つかりません。"
           not_found: "が見つかりません。"
+        book:
+          attributes:
+            isbn:
+              taken: "はすでに使用されています"
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
         not_found: "が見つかりません。"
+        taken: "はすでに使用されています"
     models:
       user: "ユーザー"
       post: "投稿"
+      book: "書籍"
     attributes:
       user:
         user_name: "ユーザー名"
@@ -29,6 +35,13 @@ ja:
         content: "内容"
         created_at: "作成日時"
         updated_at: "更新日時"
+      book:
+        title: "タイトル"
+        author: "著者"
+        isbn: "ISBN"
+        published_date: "出版日"
+        thumbnail_url: "サムネイルURL"
+        publisher: "出版社"
   errors:
     attributes:
       email:

@@ -11,6 +11,14 @@ Rails.application.routes.draw do
   resources :posts, only: [:new, :create, :show, :index, :destroy, :edit]
   resources :relationships, only: [:create, :destroy]
 
+  resources :books, only: [] do  # 個別のアクションは不要
+    collection do
+      get 'search'
+    end
+  end
+
+  resources :bookshelves, only: [:index, :create, :update, :destroy]
+
   # 管理者用のルーティング
   namespace :admin do
     resources :users, only: [:destroy]

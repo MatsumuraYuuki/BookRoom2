@@ -11,13 +11,13 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="h-screen bg-white-50">
+  <body class="h-screen bg-white">
     <%= render 'shared/flash' %>
     <%= render 'shared/navbar' %>
     <main class="container mx-auto mt-20 py-8 px-5 flex items-center justify-center">
       <%= yield %>
     </main>
-    <div class="fixed bottom-0 left-100 w-full text-center bg-green-800 text-white p-4">
+    <div class="fixed bottom-0 left-0 w-full text-center bg-green-800 text-white p-4">
       <%= debug(params) if Rails.env.development? %>
     </div>
   </body>

@@ -13,3 +13,11 @@
  *= require_tree .
  *= require_self
  */
+ @layer components {
+  .btn-green {
+    @apply bg-green-800 text-white text-sm px-2 py-1 rounded;
+  }
+  .btn-green:hover {
+    @apply bg-green-600;
+  }
+}

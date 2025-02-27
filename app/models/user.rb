@@ -1,6 +1,4 @@
 class User < ApplicationRecord
-  has_many :posts, dependent: :destroy
-
   devise :database_authenticatable, # DBに保存されたpassが正しいかどうかの検証
          :registerable, # 基本的にUser登録、編集、削除機能を作成することができる
          :recoverable, # パスワードをリセットする
@@ -9,6 +7,12 @@ class User < ApplicationRecord
          :confirmable  # ユーザーアカウントのメール認証機能を提供
 
   validates :user_name, presence: true, length: { maximum: 20 } # 変更
+
+  has_many :posts, dependent: :destroy
+
+  # 本棚との関連付け
+  has_many :bookshelves, dependent: :destroy
+  has_many :books, through: :bookshelves
 
   # ユーザーがフォローしている人を取得するメソッド
   has_many :active_relationships, class_name: 'Relationship',
@@ -22,6 +26,33 @@ class User < ApplicationRecord
 
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
+
+  # 本棚関連のメソッド追加
+  # 本を本棚に追加
+  def add_to_bookshelf(book, status = :want_to_read)
+    bookshelves.create!(book: book, status: status)
+  end
+
+  # 本が本棚にあるか確認
+  def has_book?(book)
+    books.include?(book)
+  end
+
+  # 本の読書状態を取得
+  def reading_status(book)
+    bookshelves.find_by(book: book)&.status
+  end
+
+  # 本の読書状態を更新
+  def update_reading_status(book, status)
+    bookshelf = bookshelves.find_by(book: book)
+    bookshelf&.update(status: status)
+  end
+
+  # 本棚から本を削除
+  def remove_from_bookshelf(book)
+    bookshelves.find_by(book: book)&.destroy
+  end
 
   # フォローする
   def follow(other_user)

@@ -6,6 +6,8 @@ ruby '3.2.2'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.0.8', '>= 7.0.8.5'
 
+gem 'faraday'
+
 gem 'letter_opener'
 
 gem 'faker', '2.21.0' # サンプルのユーザー作成

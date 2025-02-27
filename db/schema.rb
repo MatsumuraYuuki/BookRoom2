@@ -10,7 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_02_12_050057) do
+ActiveRecord::Schema[7.0].define(version: 2025_02_27_054854) do
+  create_table "books", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "author", null: false
+    t.string "isbn"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.date "published_date"
+    t.string "thumbnail_url"
+    t.string "publisher"
+    t.index ["isbn"], name: "index_books_on_isbn"
+  end
+
+  create_table "bookshelves", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "book_id", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_bookshelves_on_book_id"
+    t.index ["user_id", "book_id"], name: "index_bookshelves_on_user_id_and_book_id", unique: true
+    t.index ["user_id"], name: "index_bookshelves_on_user_id"
+  end
+
   create_table "posts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title", null: false
     t.string "content", null: false
@@ -49,5 +72,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_12_050057) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "bookshelves", "books"
+  add_foreign_key "bookshelves", "users"
   add_foreign_key "posts", "users"
 end

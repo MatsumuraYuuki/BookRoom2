@@ -1,0 +1,74 @@
+<div class="w-full">
+
+  <h1 class="text-2xl font-bold mb-6">本を検索</h1>
+
+  <%= form_with url: search_books_path, method: :get, local: true, class: "mb-8" do |f| %>
+    <div class="flex">
+      <%= f.text_field :query, value: @query, class: "border rounded px-4 py-2 max-w-md w-full mr-2", placeholder: "タイトル、著者名、ISBNで検索" %>
+      <%= f.submit "検索", class: "bg-blue-500 hover:bg-blue-600 text-white  px-4 py-2 rounded" %>
+    </div>
+  <% end %>
+
+  <% if @query.present? %>
+    <div class="mb-4">
+      <h2 class="text-xl font-semibold">検索結果: "<%= @query %>"</h2>
+      <p><%= @books.size %>件の結果が見つかりました</p>
+    </div>
+  <% end %>
+
+  <% if @books.any? %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% @books.each do |book| %>
+        <div class="border rounded overflow-hidden shadow-md hover:shadow-lg transition">
+          <div class="flex p-4">
+            <div class="mr-4 flex-shrink-0">
+              <% if book[:thumbnail_url].present? %>
+                <%= image_tag book[:thumbnail_url], alt: book[:title], class: "w-24 h-auto" %>
+              <% else %>
+                <div class="w-24 h-32 bg-gray-200 flex items-center justify-center">
+                  <span class="text-gray-500">No Image</span>
+                </div>
+              <% end %>
+            </div>
+            <div class="flex-grow ">
+              <h3 class="font-bold text-lg mb-1"><%= book[:title] %></h3>
+              <% if book[:author].present? %>
+                <p class="text-sm text-gray-700 mb-1">著者: <%= book[:author] %></p>
+              <% end %>
+              <% if book[:publisher].present? %>
+                <p class="text-sm text-gray-700 mb-1">出版社: <%= book[:publisher] %></p>
+              <% end %>
+              <% if book[:published_date].present? %>
+                <p class="text-sm text-gray-700 mb-1">出版日: <%= book[:published_date] %></p>
+              <% end %>
+              <% if book[:isbn].present? %>
+                <p class="text-sm text-gray-700 mb-2">ISBN: <%= book[:isbn] %></p>
+              <% end %>
+              
+              <%= form_with url: bookshelves_path, method: :post, local: true do |f| %>
+                <%= f.hidden_field 'book[title]', value: book[:title] %>
+                <%= f.hidden_field 'book[author]', value: book[:author] %>
+                <%= f.hidden_field 'book[isbn]', value: book[:isbn] %>
+                <%= f.hidden_field 'book[published_date]', value: book[:published_date] %>
+                <%= f.hidden_field 'book[thumbnail_url]', value: book[:thumbnail_url] %>
+                <%= f.hidden_field 'book[publisher]', value: book[:publisher] %>
+                <div class="flex items-center">
+                  <%= f.select :status, 
+                    Bookshelf.statuses.keys.map { |s| [s.humanize, s] }, 
+                    { selected: 'want_to_read' }, 
+                    { class: "border rounded mr-2 text-sm py-1 px-2" } 
+                  %>
+                  <%= f.submit "本棚に追加", class: "btn-green" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% elsif @query.present? %>
+    <div class="bg-gray-100 rounded p-6 text-center">
+      <p class="text-gray-700">検索結果が見つかりませんでした。別のキーワードで試してみてください。</p>
+    </div>
+  <% end %>
+</div>
