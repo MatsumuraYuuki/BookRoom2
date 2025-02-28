@@ -13,7 +13,6 @@ class BookshelvesController < ApplicationController
   def create
     #  トランザクションを開始（本の作成と本棚への追加を一連の処理として保証）
     ActiveRecord::Base.transaction do
-      # この時 選択された本はbook.to_jsonでJSONになっているのでハッシュに戻す
       book_data = book_params.to_h.symbolize_keys
 
       # 本のインスタンスを作成または取得
@@ -75,9 +74,10 @@ class BookshelvesController < ApplicationController
     params.require(:book).permit(:title, :author, :isbn, :published_date, :thumbnail_url, :publisher)
   end
 
-  # 本のデータから本を検索または作成する
+  # book_dataからそれがbookDBに登録されているか検索、なければ作成する
   def find_or_create_book(book_data)
-    # ISBNがある場合はISBNで検索、なければタイトルと著者で検索
+    # どの要素で検索するか(ISBN or タイトルと著者)
+    # ここでオブジェクト作成(DBにsaveはされない)
     book = if book_data[:isbn].present?
              Book.find_or_initialize_by(isbn: book_data[:isbn])
            else
@@ -88,8 +88,8 @@ class BookshelvesController < ApplicationController
            end
 
     # 本が新規作成の場合は属性を設定して保存
-    unless book.persisted?
-      book.assign_attributes(
+    unless book.persisted? # DBに保存済みかどうかをチェック(保存されてないなら今作成されたはず)
+      book.assign_attributes( # 作成したオブジェクトに対し要素を追加
         title: book_data[:title],
         author: book_data[:author],
         isbn: book_data[:isbn],

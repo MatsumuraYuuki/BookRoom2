@@ -4,7 +4,7 @@ require 'json'
 class GoogleBooksApi
   BASE_URL = 'https://www.googleapis.com/books/v1/volumes'.freeze
 
-  def self.search(query, max_results = 10)
+  def self.search(query, max_results = 24)
     return [] if query.nil?
 
     response = fetch_from_api(query, max_results)

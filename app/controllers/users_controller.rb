@@ -10,6 +10,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @feed_posts = @user.feed.page(params[:page]) if current_user == @user
     @posts = @user.posts.page(params[:page])
+    # 本棚の最新の5冊を取得
+    @recent_books = @user.bookshelves.includes(:book).order(created_at: :desc).limit(5)
   end
 
   def following
